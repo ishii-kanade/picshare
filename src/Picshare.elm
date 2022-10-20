@@ -5,6 +5,11 @@ import Html.Attributes exposing (class, src)
 baseUrl : String
 baseUrl =
   "https://programming-elm.com/"
+
+initialModel : { url : String, caption : String }
+initialModel =
+    { url = baseUrl ++ "1.jpg", caption = "Surfing" }
+
 viewDetailedPhoto: { url : String, caption : String } -> Html msg
 viewDetailedPhoto model =
   div [ class "detailed-photo" ]
@@ -20,3 +25,6 @@ view model =
         , div [ class "content-flow" ]
           [ viewDetailedPhoto model ]
         ]
+
+main : Html msg
+main = view initialModel
