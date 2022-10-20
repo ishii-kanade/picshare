@@ -5,19 +5,18 @@ import Html.Attributes exposing (class, src)
 baseUrl : String
 baseUrl =
   "https://programming-elm.com/"
-viewDetailedPhoto: String -> String -> Html msg
-viewDetailedPhoto url caption =
+viewDetailedPhoto: { url : String, caption : String } -> Html msg
+viewDetailedPhoto model =
   div [ class "detailed-photo" ]
-      [ img [ src url ] []
+      [ img [ src model.url ] []
       , div [ class "photo-info" ]
-        [ h2 [ class "caption" ] [ text caption ] ]
+        [ h2 [ class "caption" ] [ text model.caption ] ]
       ]
-main : Html msg
-main =
+view : { url : String, caption : String } -> Html msg
+view model =
     div []
         [ div [ class "header" ]
           [ h1 [] [ text "Picshare" ] ]
         , div [ class "content-flow" ]
-          [ viewDetailedPhoto (baseUrl ++ "1.jpg") "Surfing" ]
-          , viewDetailedPhoto (baseUrl ++ "2.jpg") "The Fox" 
+          [ viewDetailedPhoto model ]
         ]
