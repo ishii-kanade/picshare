@@ -44,46 +44,13 @@ initialModel =
     }
 
 
-
--- START:viewDetailedPhoto.annotation
-
-
 viewDetailedPhoto : Model -> Html Msg
-
-
-
--- END:viewDetailedPhoto.annotation
-
-
 viewDetailedPhoto model =
-    let
-        buttonClass =
-            if model.liked then
-                "fa-heart"
-
-            else
-                "fa-heart-o"
-
-        msg =
-            if model.liked then
-                Unlike
-
-            else
-                Like
-    in
     div [ class "detailed-photo" ]
         [ img [ src model.url ] []
         , div [ class "photo-info" ]
-            [ div [ class "like-button" ]
-                [ i
-                    [ class "fa fa-2x"
-                    , class buttonClass
-                    , onClick msg
-                    ]
-                    []
-                ]
-            , h2 [ class "caption" ] [ text model.caption ]
-            ]
+            [ viewLoveButton model ]
+        , h2 [ class "caption" ] [ text model.caption ]
         ]
 
 
@@ -108,8 +75,27 @@ view model =
 
 
 type Msg
-    = Like
-    | Unlike
+    = ToggleLike
+
+
+viewLoveButton : Model -> Html Msg
+viewLoveButton model =
+    let
+        buttonClass =
+            if model.liked then
+                "fa-heart"
+
+            else
+                "fa-heart-o"
+    in
+    div [ class "like-button" ]
+        [ i
+            [ class "fa fa-2x"
+            , class buttonClass
+            , onClick ToggleLike
+            ]
+            []
+        ]
 
 
 
@@ -125,11 +111,8 @@ update : Msg -> Model -> Model
 
 update msg model =
     case msg of
-        Like ->
-            { model | liked = True }
-
-        Unlike ->
-            { model | liked = False }
+        ToggleLike ->
+            { model | liked = not model.liked }
 
 
 
